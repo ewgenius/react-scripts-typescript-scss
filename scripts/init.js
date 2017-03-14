@@ -12,7 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 
-module.exports = function(appPath, appName, verbose, originalDirectory, template) {
+module.exports = function (appPath, appName, verbose, originalDirectory, template) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
   var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
@@ -78,12 +78,16 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
       'install',
       '--save',
       verbose && '--verbose'
-    ].filter(function(e) { return e; });
+    ].filter(function (e) {
+      return e;
+    });
     args = [
       'install',
       '--save-dev',
       verbose && '--verbose'
-    ].filter(function(e) { return e; });
+    ].filter(function (e) {
+      return e;
+    });
   }
   args.push('react', 'react-dom');
   argsDev.push('@types/node', '@types/react', '@types/react-dom', '@types/jest');
@@ -101,7 +105,9 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
   console.log('Installing @types/node, @types/react, @types/react-dom and @types/jest using ' + command + '...');
   console.log();
 
-  var procDev = spawn(command, argsDev, {stdio: 'inherit'});
+  var procDev = spawn(command, argsDev, {
+    stdio: 'inherit'
+  });
   procDev.on('close', function (codeDev) {
     if (codeDev !== 0) {
       console.error('`' + command + ' ' + argsDev.join(' ') + '` failed');
@@ -122,7 +128,9 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
     //   }
     // }
 
-    var proc = spawn(command, args, {stdio: 'inherit'});
+    var proc = spawn(command, args, {
+      stdio: 'inherit'
+    });
     proc.on('close', function (code) {
       if (code !== 0) {
         console.error('`' + command + ' ' + args.join(' ') + '` failed');
@@ -134,7 +142,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
       // backward compatibility with old global-cli's.
       var cdpath;
       if (originalDirectory &&
-          path.join(originalDirectory, appName) === appPath) {
+        path.join(originalDirectory, appName) === appPath) {
         cdpath = appName;
       } else {
         cdpath = appPath;
@@ -167,48 +175,9 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
       }
       console.log();
       console.log('Happy hacking!');
+
     });
   });
-=======
-  // Display the most elegant way to cd.
-  // This needs to handle an undefined originalDirectory for
-  // backward compatibility with old global-cli's.
-  var cdpath;
-  if (originalDirectory &&
-      path.join(originalDirectory, appName) === appPath) {
-    cdpath = appName;
-  } else {
-    cdpath = appPath;
-  }
-
-  console.log();
-  console.log('Success! Created ' + appName + ' at ' + appPath);
-  console.log('Inside that directory, you can run several commands:');
-  console.log();
-  console.log(chalk.cyan('  ' + command + ' start'));
-  console.log('    Starts the development server.');
-  console.log();
-  console.log(chalk.cyan('  ' + command + ' run build'));
-  console.log('    Bundles the app into static files for production.');
-  console.log();
-  console.log(chalk.cyan('  ' + command + ' test'));
-  console.log('    Starts the test runner.');
-  console.log();
-  console.log(chalk.cyan('  ' + command + ' run eject'));
-  console.log('    Removes this tool and copies build dependencies, configuration files');
-  console.log('    and scripts into the app directory. If you do this, you can’t go back!');
-  console.log();
-  console.log('We suggest that you begin by typing:');
-  console.log();
-  console.log(chalk.cyan('  cd'), cdpath);
-  console.log('  ' + chalk.cyan(command + ' start'));
-  if (readmeExists) {
-    console.log();
-    console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
-  }
-  console.log();
-  console.log('Happy hacking!');
->>>>>>> facebookincubator/master
 };
 
 function isReactInstalled(appPackage) {
