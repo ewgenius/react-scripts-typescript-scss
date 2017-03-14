@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-typescript-scss",
-  "version": "0.9.18",
+  "version": "0.9.19",
   "description": "Configuration and scripts for Create React App with TypeScript and SCSS support",
   "repository": "ewgenius/create-react-app",
   "license": "BSD-3-Clause",
